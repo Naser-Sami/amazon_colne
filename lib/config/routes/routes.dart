@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '/core/_core.dart';
 import '/config/_config.dart';
 import '/features/_features.dart';
-import 'package:go_router/go_router.dart';
 
 // GoRouter configuration
 final router = GoRouter(
@@ -21,10 +20,8 @@ final router = GoRouter(
     GoRoute(
       name: 'Home',
       path: '/',
-      pageBuilder: (context, state) => fadeTransitionPage(
-        context,
-        state,
-        const HomePage(),
+      pageBuilder: (context, state) => CupertinoPage(
+        child: const AuthenticationScreen(),
       ),
       redirect: (context, state) {
         return null;
@@ -32,12 +29,3 @@ final router = GoRouter(
     ),
   ],
 );
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
-}

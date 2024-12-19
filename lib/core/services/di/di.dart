@@ -1,8 +1,6 @@
 import 'package:get_it/get_it.dart';
 
-import '/core/_core.dart';
 import '/config/_config.dart';
-import '/features/_features.dart';
 
 // Global Variable
 // Initialize GetIt

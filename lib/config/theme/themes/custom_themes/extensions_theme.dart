@@ -14,12 +14,12 @@ Iterable<ThemeExtension<dynamic>>? lightExtensions = <ThemeExtension<dynamic>>[
       borderRadius: BorderRadius.all(Radius.circular(TRadius.bR08)),
     ),
     customBoxDecorationGradient: BoxDecoration(
-      borderRadius: const BorderRadius.all(Radius.circular(TRadius.bR30)),
+      borderRadius: const BorderRadius.all(Radius.circular(TRadius.bR08)),
       gradient: LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
         colors: [
-          for (int x = 0; x < 105; x += 5) LightThemeColors.primaryContainer.withOpacity(x / 100),
+          for (int x = 0; x < 105; x += 5) LightThemeColors.primaryContainer.withValues(alpha: x / 100),
         ],
       ),
     ),
@@ -37,12 +37,12 @@ Iterable<ThemeExtension<dynamic>>? darkExtensions = <ThemeExtension<dynamic>>[
       borderRadius: BorderRadius.all(Radius.circular(TRadius.bR08)),
     ),
     customBoxDecorationGradient: BoxDecoration(
-      borderRadius: const BorderRadius.all(Radius.circular(TRadius.bR30)),
+      borderRadius: const BorderRadius.all(Radius.circular(TRadius.bR08)),
       gradient: LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
         colors: [
-          for (int x = 0; x < 105; x += 5) DarkThemeColors.primaryContainer.withOpacity(x / 100),
+          for (int x = 0; x < 105; x += 5) DarkThemeColors.primaryContainer.withValues(alpha: x / 100),
         ],
       ),
     ),

@@ -10,7 +10,7 @@ ThemeData _lightTheme = ThemeData.light(useMaterial3: true).copyWith(
   primaryTextTheme: TTextTheme.lightTextTheme,
   extensions: lightExtensions,
   dividerTheme: lightDividerTheme,
-  dividerColor: LightThemeColors.onBackground.withOpacity(0.25),
+  dividerColor: LightThemeColors.onBackground.withValues(alpha: 0.25),
   textButtonTheme: lightTextButtonTheme,
   elevatedButtonTheme: lightElevatedButtonTheme,
 );

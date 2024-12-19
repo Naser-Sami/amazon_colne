@@ -9,7 +9,7 @@ final darkElevatedButtonTheme = ElevatedButtonThemeData(
     backgroundColor: DarkThemeColors.primary,
     foregroundColor: Colors.white,
     shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(TRadius.bR30),
+      borderRadius: BorderRadius.circular(TRadius.bR08),
     ),
     textStyle: TTextStyle.titleLarge(),
   ),
@@ -23,7 +23,7 @@ final lightElevatedButtonTheme = ElevatedButtonThemeData(
     backgroundColor: LightThemeColors.primary,
     foregroundColor: Colors.white,
     shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(TRadius.bR30),
+      borderRadius: BorderRadius.circular(TRadius.bR08),
     ),
     textStyle: TTextStyle.titleLarge(),
   ),

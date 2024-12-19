@@ -37,19 +37,19 @@ class TTextTheme {
       color: LightThemeColors.text,
     ),
     bodyMedium: TTextStyle.bodyMedium().apply(
-      color: LightThemeColors.text.withOpacity(0.60),
+      color: LightThemeColors.text.withValues(alpha: 0.60),
     ),
     bodySmall: TTextStyle.bodySmall().apply(
-      color: LightThemeColors.text.withOpacity(0.60),
+      color: LightThemeColors.text.withValues(alpha: 0.60),
     ),
     labelLarge: TTextStyle.labelLarge().apply(
-      color: LightThemeColors.text.withOpacity(0.60),
+      color: LightThemeColors.text.withValues(alpha: 0.60),
     ),
     labelMedium: TTextStyle.labelMedium().apply(
-      color: LightThemeColors.text.withOpacity(0.60),
+      color: LightThemeColors.text.withValues(alpha: 0.60),
     ),
     labelSmall: TTextStyle.labelSmall().apply(
-      color: LightThemeColors.text.withOpacity(0.60),
+      color: LightThemeColors.text.withValues(alpha: 0.60),
     ),
   );
 
@@ -85,19 +85,19 @@ class TTextTheme {
       color: DarkThemeColors.text,
     ),
     bodyMedium: TTextStyle.bodyMedium().apply(
-      color: DarkThemeColors.text.withOpacity(0.60),
+      color: DarkThemeColors.text.withValues(alpha: 0.60),
     ),
     bodySmall: TTextStyle.bodySmall().apply(
-      color: DarkThemeColors.text.withOpacity(0.60),
+      color: DarkThemeColors.text.withValues(alpha: 0.60),
     ),
     labelLarge: TTextStyle.labelLarge().apply(
-      color: DarkThemeColors.text.withOpacity(0.60),
+      color: DarkThemeColors.text.withValues(alpha: 0.60),
     ),
     labelMedium: TTextStyle.labelMedium().apply(
-      color: DarkThemeColors.text.withOpacity(0.60),
+      color: DarkThemeColors.text.withValues(alpha: 0.60),
     ),
     labelSmall: TTextStyle.labelSmall().apply(
-      color: DarkThemeColors.text.withOpacity(0.60),
+      color: DarkThemeColors.text.withValues(alpha: 0.60),
     ),
   );
 }
