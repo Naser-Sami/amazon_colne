@@ -16,7 +16,7 @@ class AuthRepositoryImplementation extends AuthenticationRepository {
   Future<UserEntity> signUp(
       {required String name, required String email, required String password}) async {
     final userModel = await _remoteDataSource.register(
-      username: name,
+      name: name,
       email: email,
       password: password,
     );

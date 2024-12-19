@@ -10,6 +10,12 @@ final sl = GetIt.I;
 class DI {
   Future<void> init() async {
     // BLOC's
+    sl.registerFactory<AuthBloc>(
+      () => AuthBloc(
+        sl<SignUpUseCase>(),
+        sl<LoginUseCase>(),
+      ),
+    );
 
     // CUBIT's
     sl.registerLazySingleton<ThemeCubit>(

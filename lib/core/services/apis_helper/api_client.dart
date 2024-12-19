@@ -12,9 +12,9 @@ class ApiClient {
       connectTimeout: const Duration(seconds: 5),
       receiveTimeout: const Duration(seconds: 5),
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json; charset=UTF-8',
         'Accept': 'application/json',
-        'Authorization': 'Bearer $token',
+        // 'Authorization': 'Bearer $token',
       },
     ),
   );
@@ -60,13 +60,13 @@ class ApiClient {
     T Function(dynamic data)? parser,
   }) async {
     headers ??= dio.options.headers;
-    headers['Authorization'] = 'Bearer $token';
+    // headers['Authorization'] = 'Bearer $token';
 
-    log('Request: $method $path');
-    log('Token $token');
-    log('Query Parameters: $queryParameters');
-    log('Data: $data');
-    log('Headers: $headers');
+    // log('Request: $method $path');
+    // log('Token $token');
+    // log('Query Parameters: $queryParameters');
+    // log('Data: $data');
+    // log('Headers: $headers');
 
     try {
       // Make HTTP request
