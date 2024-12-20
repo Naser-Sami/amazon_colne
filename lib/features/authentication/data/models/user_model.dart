@@ -7,6 +7,7 @@ class UserModel extends Equatable {
   final String address;
   final String type;
   final String id;
+  final String token;
   final int version;
 
   // constructor
@@ -17,6 +18,7 @@ class UserModel extends Equatable {
     required this.address,
     required this.type,
     required this.id,
+    required this.token,
     required this.version,
   });
 
@@ -29,6 +31,7 @@ class UserModel extends Equatable {
       address: json['address'],
       type: json['type'],
       id: json['_id'],
+      token: json['token'],
       version: json['__v'],
     );
   }
@@ -42,6 +45,7 @@ class UserModel extends Equatable {
       'address': address,
       'type': type,
       '_id': id,
+      'token': token,
       '__v': version,
     };
   }
@@ -55,6 +59,7 @@ class UserModel extends Equatable {
       address: '',
       type: '',
       id: '',
+      token: '',
       version: 0,
     );
   }
@@ -67,6 +72,7 @@ class UserModel extends Equatable {
     String? address,
     String? type,
     String? id,
+    String? token,
     int? version,
   }) {
     return UserModel(
@@ -76,6 +82,7 @@ class UserModel extends Equatable {
       address: address ?? this.address,
       type: type ?? this.type,
       id: id ?? this.id,
+      token: token ?? this.token,
       version: version ?? this.version,
     );
   }
@@ -83,9 +90,15 @@ class UserModel extends Equatable {
   // to string method
   @override
   String toString() {
-    return 'UserModel(id: $id, email: $email, username: $name)';
+    return """
+
+      UserModel(id: $id, email: $email, username: $name)
+      ----------------------------------------------------------
+      TOKEN: $token
+
+      """;
   }
 
   @override
-  List<Object?> get props => [name, email, password, address, type, id, version];
+  List<Object?> get props => [name, email, password, address, type, id, token, version];
 }

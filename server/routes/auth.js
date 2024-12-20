@@ -41,8 +41,12 @@ router.post("/api/sign-up", async (req, res) => {
 
     user = await user.save();
 
+    // Create a token
+    const token = jwt.sign({ id: user._id }, "passwordKey");
+
     // Send a response back to the client ( return the data )
-    res.json(user);
+    res.json({token, ...user._doc});
+    
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -66,7 +70,7 @@ router.post("/api/login", async (req, res) => {
 
         // Create a token
         const token = jwt.sign({ id: user._id }, "passwordKey");
-        
+
         // Send a response back to the client ( return the data )
         res.json({ token, ...user._doc });
     } 
@@ -75,6 +79,25 @@ router.post("/api/login", async (req, res) => {
     }
 });
 
+// verify token
+router.post("/tokenIsValid", async (req, res) => {
+    try {
+        const token = req.header("x-auth-token");
+        if (!token) return res.json(false);
+
+        const verified = jwt.verify(token, "passwordKey");
+        if (!verified) return res.json(false);
+        
+        // Get the user from the database
+        const user = await User.findById(verified.id);
+        if (!user) return res.json(false);
+        
+        res.json(true);
+    }
+        catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
 
 // Export the router object
 module.exports = router;

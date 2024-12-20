@@ -1,32 +1,32 @@
 import 'dart:developer';
 import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class ApiClient {
-  static const String baseUrl = 'http://localhost:3000';
-  static String? token;
+  static String? _token;
+  static final _storage = const FlutterSecureStorage();
+  static const String _baseUrl = 'http://localhost:3000';
 
   // Dio instance
-  static final Dio dio = Dio(
+  static final Dio _dio = Dio(
     BaseOptions(
-      baseUrl: baseUrl,
+      baseUrl: const String.fromEnvironment(
+        'API_BASE_URL',
+        defaultValue: _baseUrl,
+      ),
       connectTimeout: const Duration(seconds: 5),
       receiveTimeout: const Duration(seconds: 5),
       headers: {
         'Content-Type': 'application/json; charset=UTF-8',
         'Accept': 'application/json',
-        // 'Authorization': 'Bearer $token',
       },
     ),
-  );
-
-  // Optional cancel token for request cancellation
-  // static CancelToken? cancelToken;
-
-  // Constructor to add interceptors
-  ApiClient() {
-    dio.interceptors.add(
+  )..interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) {
+          if (_token != null) {
+            options.headers['Authorization'] = 'Bearer $_token';
+          }
           log('Request: ${options.method} ${options.uri}');
           return handler.next(options);
         },
@@ -40,15 +40,12 @@ class ApiClient {
         },
       ),
     );
-  }
 
-  /// Cancel any ongoing requests
-  // static void cancelOngoingRequests() {
-  //   if (cancelToken != null && !cancelToken!.isCancelled) {
-  //     cancelToken?.cancel('Request canceled.');
-  //   }
-  //   cancelToken = CancelToken();
-  // }
+  /// Set or update the token
+  static Future<void> setToken(String? token) async {
+    _token = token;
+    await _storage.write(key: 'x-auth-token', value: token);
+  }
 
   /// General HTTP Request Handler
   static Future<T?> request<T>({
@@ -59,124 +56,108 @@ class ApiClient {
     Map<String, dynamic>? headers,
     T Function(dynamic data)? parser,
   }) async {
-    headers ??= dio.options.headers;
-    // headers['Authorization'] = 'Bearer $token';
-
-    // log('Request: $method $path');
-    // log('Token $token');
-    // log('Query Parameters: $queryParameters');
-    // log('Data: $data');
-    // log('Headers: $headers');
-
     try {
-      // Make HTTP request
-      final response = await dio.request(
+      final response = await _dio.request(
         path,
         options: Options(method: method, headers: headers),
         queryParameters: queryParameters,
         data: data,
       );
 
-      log('Response: ${response.statusCode} ${response.realUri}');
       log('Response Data: ${response.data}');
 
-      // Parse response using the provided parser
       if (parser != null) {
         return parser(response.data);
-      } else {
-        return response.data as T;
       }
+      return response.data as T?;
     } on DioException catch (e) {
-      log('DioException: ${e.message}');
-      handleError(e);
-      throw Exception(e);
+      _handleError(e);
+      rethrow;
     } catch (e) {
-      log('Unhandled error: $e');
+      log('Unhandled Exception: $e');
       throw Exception(e);
     }
   }
 
-  /// GET Method
+  /// HTTP Methods
   static Future<T?> get<T>({
     required String path,
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? headers,
     T Function(dynamic data)? parser,
-  }) async {
-    log('GET DATA: $parser');
+  }) async =>
+      request(
+        path: path,
+        method: 'GET',
+        queryParameters: queryParameters,
+        headers: headers,
+        parser: parser,
+      );
 
-    return request(
-      path: path,
-      method: 'GET',
-      queryParameters: queryParameters,
-      headers: headers,
-      parser: parser,
-    );
-  }
-
-  /// POST Method
   static Future<T?> post<T>({
     required String path,
     Object? data,
     Map<String, dynamic>? headers,
     T Function(dynamic data)? parser,
-  }) async {
-    return request(
-      path: path,
-      method: 'POST',
-      data: data,
-      headers: headers,
-      parser: parser,
-    );
-  }
+  }) async =>
+      request(
+        path: path,
+        method: 'POST',
+        data: data,
+        headers: headers,
+        parser: parser,
+      );
 
-  /// PUT Method
   static Future<T?> put<T>({
     required String path,
     Object? data,
     Map<String, dynamic>? headers,
     T Function(dynamic data)? parser,
-  }) async {
-    return request(
-      path: path,
-      method: 'PUT',
-      data: data,
-      headers: headers,
-      parser: parser,
-    );
-  }
+  }) async =>
+      request(
+        path: path,
+        method: 'PUT',
+        data: data,
+        headers: headers,
+        parser: parser,
+      );
 
-  /// DELETE Method
   static Future<T?> delete<T>({
     required String path,
     Object? data,
     Map<String, dynamic>? headers,
     T Function(dynamic data)? parser,
-  }) async {
-    return request(
-      path: path,
-      method: 'DELETE',
-      data: data,
-      headers: headers,
-      parser: parser,
-    );
-  }
+  }) async =>
+      request(
+        path: path,
+        method: 'DELETE',
+        data: data,
+        headers: headers,
+        parser: parser,
+      );
 
   /// Handle Errors Globally
-  static void handleError(DioException error) {
+  static void _handleError(DioException error) {
+    log("Error type: ${error.type}");
+
     switch (error.type) {
       case DioExceptionType.connectionTimeout:
         log('Connection timeout: ${error.message}');
-        throw Exception('Connection timeout: ${error.message}');
+        throw Exception('Connection timeout');
       case DioExceptionType.receiveTimeout:
         log('Receive timeout: ${error.message}');
-        throw Exception('Receive timeout: ${error.message}');
+        throw Exception('Receive timeout');
       case DioExceptionType.badResponse:
-        log('Bad response: ${error.response?.statusCode} ${error.response?.data}');
-        throw Exception(error.response?.data['message']);
+        final statusCode = error.response?.statusCode;
+        final responseData = error.response?.data;
+        log('Bad response: $statusCode $responseData');
+        throw Exception(responseData?['msg'] ?? 'An error occurred');
+      case DioExceptionType.cancel:
+        log('Request canceled: ${error.message}');
+        throw Exception('Request canceled');
       default:
-        log('Unexpected error: ${error.message}');
-        throw Exception('Unexpected error: ${error.message}');
+        log('Unknown error: ${error.message}');
+        throw Exception('An unknown error occurred');
     }
   }
 }

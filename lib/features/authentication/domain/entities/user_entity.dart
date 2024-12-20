@@ -7,6 +7,7 @@ class UserEntity extends Equatable {
   final String address;
   final String type;
   final String id;
+  final String token;
   final int version;
 
   // constructor
@@ -17,6 +18,7 @@ class UserEntity extends Equatable {
       required this.address,
       required this.type,
       required this.id,
+      required this.token,
       required this.version});
 
   // copy with method
@@ -27,6 +29,7 @@ class UserEntity extends Equatable {
     String? address,
     String? type,
     String? id,
+    String? token,
     int? version,
   }) {
     return UserEntity(
@@ -36,16 +39,35 @@ class UserEntity extends Equatable {
       address: address ?? this.address,
       type: type ?? this.type,
       id: id ?? this.id,
+      token: token ?? this.token,
       version: version ?? this.version,
+    );
+  }
+
+// empty constructor
+  factory UserEntity.empty() {
+    return const UserEntity(
+      name: '',
+      email: '',
+      password: '',
+      address: '',
+      type: '',
+      id: '',
+      token: '',
+      version: 0,
     );
   }
 
   // to string method
   @override
   String toString() {
-    return 'UserEntity(id: $id, email: $email, username: $name)';
+    return """
+      UserEntity(id: $id, email: $email, username: $name)
+      ----------------------------------------------------------
+      TOKEN: $token
+      """;
   }
 
   @override
-  List<Object?> get props => [name, email, password, address, type, id, version];
+  List<Object?> get props => [name, email, password, address, type, id, token, version];
 }

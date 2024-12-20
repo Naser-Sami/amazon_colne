@@ -14,6 +14,7 @@ const password = "add-your-password-here";
 const db = `add-your-mongodb-uri-here`;
 
 
+
 // MIDDLEWARE
 app.use(express.json())
 app.use(authRoutes);

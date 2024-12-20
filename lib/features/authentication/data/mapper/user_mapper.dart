@@ -11,6 +11,7 @@ class UserMapper {
       address: userModel.address,
       type: userModel.type,
       id: userModel.id,
+      token: userModel.token,
       version: userModel.version,
     );
   }
@@ -23,6 +24,7 @@ class UserMapper {
       address: userEntity.address,
       type: userEntity.type,
       id: userEntity.id,
+      token: userEntity.token,
       version: userEntity.version,
     );
   }

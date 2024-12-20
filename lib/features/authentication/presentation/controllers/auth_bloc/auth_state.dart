@@ -10,11 +10,11 @@ class AuthInitialState extends AuthState {}
 class AuthLoadingState extends AuthState {}
 
 class AuthSuccessState extends AuthState {
-  final String message;
-  AuthSuccessState(this.message);
+  final UserEntity user;
+  AuthSuccessState(this.user);
 
   @override
-  List<Object> get props => [message];
+  List<Object> get props => [user];
 }
 
 class AuthFailureState extends AuthState {
