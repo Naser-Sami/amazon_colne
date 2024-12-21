@@ -48,8 +48,8 @@ List<RouteBase> routes = [
     },
   ),
   GoRoute(
-    name: 'Home',
-    path: '/home-screen',
+    name: 'Main',
+    path: '/home',
     pageBuilder: (context, state) => CupertinoPage(
       child: const BottomNavigationBarComponent(),
     ),
@@ -58,7 +58,17 @@ List<RouteBase> routes = [
     },
   ),
   GoRoute(
-    name: 'Account',
+    name: 'Home',
+    path: '/home-screen',
+    pageBuilder: (context, state) => CupertinoPage(
+      child: const HomeScreen(),
+    ),
+    redirect: (context, state) {
+      return null;
+    },
+  ),
+  GoRoute(
+    name: 'Account ',
     path: '/account',
     pageBuilder: (context, state) => CupertinoPage(
       child: AccountScreen(),

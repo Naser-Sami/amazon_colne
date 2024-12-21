@@ -13,7 +13,7 @@ class _BottomNavigationBarComponentState extends State<BottomNavigationBarCompon
   int _page = 0;
 
   List<Widget> pages = [
-    const Scaffold(body: Center(child: Text("Home"))),
+    const HomeScreen(),
     const AccountScreen(),
     const Scaffold(body: Center(child: Text("Cart"))),
   ];

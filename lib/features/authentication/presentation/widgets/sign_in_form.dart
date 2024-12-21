@@ -99,7 +99,7 @@ class _SignInFormState extends State<SignInForm> {
 
       case AuthSuccessState():
         // Navigate to home screen
-        context.go('/home-screen');
+        context.go('/home');
         break;
     }
   }
