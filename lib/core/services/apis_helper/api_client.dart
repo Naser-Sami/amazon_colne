@@ -23,19 +23,20 @@ class ApiClient {
     ),
   )..interceptors.add(
       InterceptorsWrapper(
-        onRequest: (options, handler) {
+        onRequest: (options, handler) async {
           if (_token != null) {
-            options.headers['Authorization'] = 'Bearer $_token';
+            _token = await getToken();
+            options.headers['x-auth-token'] = _token;
           }
           log('Request: ${options.method} ${options.uri}');
           return handler.next(options);
         },
         onResponse: (response, handler) {
-          log('Response: [${response.statusCode}] ${response.realUri}');
+          // log('Response: [${response.statusCode}] ${response.realUri}');
           return handler.next(response);
         },
         onError: (error, handler) {
-          log('Error: [${error.response?.statusCode}] ${error.message}');
+          // log('Error: [${error.response?.statusCode}] ${error.message}');
           return handler.next(error);
         },
       ),
@@ -44,7 +45,12 @@ class ApiClient {
   /// Set or update the token
   static Future<void> setToken(String? token) async {
     _token = token;
-    await _storage.write(key: 'x-auth-token', value: token);
+    await _storage.write(key: 'x-auth-token', value: _token);
+  }
+
+  // Get the current token
+  static Future<String?> getToken() async {
+    return await _storage.read(key: 'x-auth-token');
   }
 
   /// General HTTP Request Handler
@@ -56,6 +62,13 @@ class ApiClient {
     Map<String, dynamic>? headers,
     T Function(dynamic data)? parser,
   }) async {
+    headers ??= _dio.options.headers;
+    _dio.options.headers['x-auth-token'] = await getToken();
+
+    // log('Request: $method $path');
+    // log('Query Parameters: $queryParameters');
+    // log('Headers: $headers');
+
     try {
       final response = await _dio.request(
         path,
@@ -64,7 +77,7 @@ class ApiClient {
         data: data,
       );
 
-      log('Response Data: ${response.data}');
+      // log('Response Data: ${response.data}');
 
       if (parser != null) {
         return parser(response.data);

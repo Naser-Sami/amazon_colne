@@ -29,3 +29,10 @@ class LoginEvent extends AuthEvents {
   @override
   List<Object> get props => [email, password];
 }
+
+class GetUserDataEvent extends AuthEvents {
+  GetUserDataEvent();
+
+  @override
+  List<Object> get props => [];
+}

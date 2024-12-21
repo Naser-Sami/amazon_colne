@@ -6,6 +6,7 @@
 // Import express
 const express = require('express');
 const User = require('../models/user')
+const auth = require('../middlewares/auth');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -83,13 +84,17 @@ router.post("/api/login", async (req, res) => {
 router.post("/tokenIsValid", async (req, res) => {
     try {
         const token = req.header("x-auth-token");
+        console.log(`TOKEN: ${token}`);
+
         if (!token) return res.json(false);
 
         const verified = jwt.verify(token, "passwordKey");
+        console.log(`TOKEN VERIFIED: ${verified}`);
         if (!verified) return res.json(false);
         
         // Get the user from the database
         const user = await User.findById(verified.id);
+        console.log(`USER: ${user}`);
         if (!user) return res.json(false);
         
         res.json(true);
@@ -97,6 +102,12 @@ router.post("/tokenIsValid", async (req, res) => {
         catch (err) {
         res.status(500).json({ error: err.message });
     }
+});
+
+// Get user data
+router.get("/", auth, async (req, res) => {
+    const user = await User.findById(req.user);
+    res.json({ ...user._doc, token: req.token });
 });
 
 // Export the router object

@@ -2,10 +2,7 @@ import '/core/_core.dart';
 import '/features/authentication/_authentication.dart';
 
 class AuthRemoteDataSource {
-  Future<UserModel> login({
-    required String email,
-    required String password,
-  }) async {
+  Future<UserModel> login({required String email, required String password}) async {
     final user = await ApiClient.post<UserModel>(
       path: '/api/login',
       parser: (data) => UserModel.fromJson(data),
@@ -15,11 +12,8 @@ class AuthRemoteDataSource {
     return user ?? UserModel.empty();
   }
 
-  Future<UserModel> singUp({
-    required String name,
-    required String email,
-    required String password,
-  }) async {
+  Future<UserModel> singUp(
+      {required String name, required String email, required String password}) async {
     // create user model
     UserModel userModel = UserModel(
         name: name,
@@ -38,6 +32,24 @@ class AuthRemoteDataSource {
       data: userModel.toJson(),
     );
 
+    return user ?? UserModel.empty();
+  }
+
+  Future<bool> tokenIsValid() async {
+    // send request to server
+    final isTokenValid = await ApiClient.post<bool>(
+      path: '/tokenIsValid',
+      parser: (data) => data,
+    );
+    return isTokenValid ?? false;
+  }
+
+  Future<UserModel> getUserData() async {
+    // send request to server
+    final user = await ApiClient.get<UserModel>(
+      path: '/',
+      parser: (data) => UserModel.fromJson(data),
+    );
     return user ?? UserModel.empty();
   }
 }

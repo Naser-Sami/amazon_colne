@@ -14,6 +14,8 @@ class DI {
       () => AuthBloc(
         sl<SignUpUseCase>(),
         sl<LoginUseCase>(),
+        sl<TokenIsValidUseCase>(),
+        sl<GetUserDataUseCase>(),
       ),
     );
 
@@ -47,6 +49,18 @@ class DI {
 
     sl.registerLazySingleton<SignUpUseCase>(
       () => SignUpUseCase(
+        repo: sl<AuthenticationRepository>(),
+      ),
+    );
+
+    sl.registerLazySingleton<TokenIsValidUseCase>(
+      () => TokenIsValidUseCase(
+        repo: sl<AuthenticationRepository>(),
+      ),
+    );
+
+    sl.registerLazySingleton<GetUserDataUseCase>(
+      () => GetUserDataUseCase(
         repo: sl<AuthenticationRepository>(),
       ),
     );

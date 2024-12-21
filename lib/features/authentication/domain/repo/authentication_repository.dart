@@ -11,4 +11,8 @@ abstract class AuthenticationRepository {
     required String email,
     required String password,
   });
+
+  Future<bool> tokenIsValid();
+
+  Future<UserEntity> getUserData();
 }

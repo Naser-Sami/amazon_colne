@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '/core/_core.dart';
 import '/config/_config.dart';
@@ -17,17 +16,19 @@ final router = GoRouter(
   // Set the navigatorKey
   errorBuilder: (context, state) => ErrorPage(state.error.toString()),
   redirect: (context, state) async {
-    // Check if the user is authenticated
-    const storage = FlutterSecureStorage();
-    String? token = await storage.read(key: 'x-auth-token');
+    // Get the token from the user data
+    context.read<AuthBloc>().add(GetUserDataEvent());
+    final user = context.read<AuthBloc>().user;
 
     // If the user is not authenticated, redirect to the login page
-    if (token == null || token.isEmpty) {
+    if (user == null) {
       return '/';
     }
 
-    // Set the token in the ApiClient
-    await ApiClient.setToken(token);
+    if (user.token.isNotEmpty) {
+      // If the user is authenticated, redirect to the home screen
+      return '/home-screen';
+    }
 
     return null;
   },

@@ -10,6 +10,8 @@ final providers = [
     create: (context) => AuthBloc(
       sl<SignUpUseCase>(),
       sl<LoginUseCase>(),
+      sl<TokenIsValidUseCase>(),
+      sl<GetUserDataUseCase>(),
     ),
   ),
 ];

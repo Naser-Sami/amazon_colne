@@ -10,11 +10,24 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvents, AuthState> {
   final SignUpUseCase _signUpUseCase;
   final LoginUseCase _loginUseCase;
+  final TokenIsValidUseCase _tokenIsValidUseCase;
+  final GetUserDataUseCase _getUserUseCase;
+  UserEntity? _user;
 
-  AuthBloc(this._signUpUseCase, this._loginUseCase) : super(AuthInitialState()) {
+  AuthBloc(
+    this._signUpUseCase,
+    this._loginUseCase,
+    this._tokenIsValidUseCase,
+    this._getUserUseCase,
+  ) : super(AuthInitialState()) {
     on<SingUpEvent>(_onSingUpEvent);
     on<LoginEvent>(_onLoginEvent);
+    on<GetUserDataEvent>(_onGetUserDataEvent);
   }
+
+  // Getter and Setter User
+  UserEntity? get user => _user;
+  void setUser(UserEntity user) => _user = user;
 
   void _onSingUpEvent(SingUpEvent event, Emitter<AuthState> emit) async {
     emit(AuthLoadingState());
@@ -26,6 +39,7 @@ class AuthBloc extends Bloc<AuthEvents, AuthState> {
       );
 
       await ApiClient.setToken(user.token);
+      setUser(user);
       emit(AuthSuccessState(user));
     } catch (e) {
       emit(AuthFailureState(e.toString()));
@@ -41,7 +55,34 @@ class AuthBloc extends Bloc<AuthEvents, AuthState> {
       );
 
       await ApiClient.setToken(user.token);
+      setUser(user);
       emit(AuthSuccessState(user));
+    } catch (e) {
+      emit(AuthFailureState(e.toString()));
+    }
+  }
+
+  void _onGetUserDataEvent(GetUserDataEvent event, Emitter<AuthState> emit) async {
+    emit(AuthLoadingState());
+    try {
+      // Check if the user is authenticated
+      String? token = await ApiClient.getToken();
+
+      if (token == null) {
+        await ApiClient.setToken('');
+      }
+
+      // Check if the token is valid
+      final isValid = await _tokenIsValidUseCase.call();
+
+      if (isValid) {
+        // Get user data
+        final user = await _getUserUseCase.call();
+        setUser(user);
+        emit(AuthSuccessState(user));
+      } else {
+        await ApiClient.setToken('');
+      }
     } catch (e) {
       emit(AuthFailureState(e.toString()));
     }
