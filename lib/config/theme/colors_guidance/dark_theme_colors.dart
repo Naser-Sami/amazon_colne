@@ -68,4 +68,12 @@ class DarkThemeColors {
   static const text = Color(0xFFFFFFFF); // White text
   static const red = Color(0xFFD32D20); // Same as error
   static const green = Color(0xFF007E3C); // Amazon green for success
+
+  static const appBarGradient = LinearGradient(
+    colors: [
+      Color.fromARGB(255, 29, 201, 192),
+      Color.fromARGB(255, 125, 221, 216),
+    ],
+    stops: [0.5, 1.0],
+  );
 }
