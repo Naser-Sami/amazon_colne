@@ -12,6 +12,6 @@ final providers = [
       sl<LoginUseCase>(),
       sl<TokenIsValidUseCase>(),
       sl<GetUserDataUseCase>(),
-    ),
+    )..add(GetUserDataEvent()),
   ),
 ];

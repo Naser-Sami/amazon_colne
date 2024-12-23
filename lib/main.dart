@@ -16,11 +16,12 @@ Future<void> main() async {
   // It is safe to call this function when running on mobile or desktop as well.
   setPathUrlStrategy();
 
-  await Hive.initFlutter();
-  await Hive.openBox('settings'); // Open a box for theme preferences
-
   // Ensure Service Locator is Started
   DI().init();
+
+  // Initialize Hive
+  await Hive.initFlutter();
+  await Hive.openBox('settings'); // Open a box for theme preferences
 
   runApp(
     MultiBlocProvider(
