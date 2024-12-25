@@ -10,8 +10,8 @@ const authRoutes = require('./routes/auth');
 // INITIALIZE
 const PORT = 3000;
 const app = express();
-const password = "helloMeJSPythonJ_1.618";
-const db = `mongodb+srv://naserebedo:${password}@cluster0.ckx96.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+const password = "";
+const db = ``;
 
 
 // MIDDLEWARE
