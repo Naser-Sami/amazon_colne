@@ -1,4 +1,8 @@
 // Packages
+import 'dart:developer';
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:delightful_toast/delight_toast.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -59,7 +63,13 @@ class THelperFunctions {
 
   // Show Toast Bar
   static void showToastBar(BuildContext context, Widget title,
-      {int? duration, Widget? subtitle, Widget? leading, Color? color, Color? shadowColor, Widget? trailing, dynamic Function()? onTap}) {
+      {int? duration,
+      Widget? subtitle,
+      Widget? leading,
+      Color? color,
+      Color? shadowColor,
+      Widget? trailing,
+      dynamic Function()? onTap}) {
     DelightToastBar(
       autoDismiss: true,
       snackbarDuration: Duration(milliseconds: duration ?? 5000),
@@ -92,5 +102,25 @@ class THelperFunctions {
         );
       },
     );
+  }
+
+  static Future<List<File>> pickImages() async {
+    List<File> images = [];
+    try {
+      FilePickerResult? files = await FilePicker.platform.pickFiles(
+        type: FileType.image,
+        allowMultiple: true,
+      );
+
+      if (files != null && files.files.isNotEmpty) {
+        for (int i = 0; i < files.files.length; i++) {
+          images.add(File(files.files[i].path!));
+        }
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+
+    return images;
   }
 }

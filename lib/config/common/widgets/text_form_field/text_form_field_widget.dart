@@ -15,6 +15,7 @@ class TextFormFieldWidget extends StatelessWidget {
     this.obscureText = false,
     this.validator,
     this.decoration,
+    this.maxLines = 1,
   });
 
   final TextEditingController controller;
@@ -27,6 +28,7 @@ class TextFormFieldWidget extends StatelessWidget {
   final bool obscureText;
   final String? Function(String?)? validator;
   final InputDecoration? decoration;
+  final int? maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +36,7 @@ class TextFormFieldWidget extends StatelessWidget {
       controller: controller,
       obscureText: obscureText,
       validator: validator,
+      maxLines: maxLines,
       decoration: inputDecoration(context),
     );
   }

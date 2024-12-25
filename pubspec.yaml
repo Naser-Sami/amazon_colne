@@ -76,6 +76,13 @@ dependencies:
   # Toast
   delightful_toast: ^1.1.0
 
+  dotted_border: ^2.1.0
+
+  # File Picker
+  file_picker: ^8.1.6
+
+  cloudinary_public: ^0.23.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
