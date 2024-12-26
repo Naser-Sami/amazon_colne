@@ -11,7 +11,7 @@ class AdminRepositoryImpl implements IAdminRepository {
   AdminRepositoryImpl(this._remoteDataSource);
 
   @override
-  Future<void> sellProduct(
+  Future<void> addProduct(
       {required BuildContext context,
       required ProductEntities product,
       required List<File> images}) async {
@@ -31,7 +31,7 @@ class AdminRepositoryImpl implements IAdminRepository {
       }
 
       // Create a new product model
-      final productModel = ProductModel(
+      final productEntity = ProductEntities(
         name: product.name,
         description: product.description,
         quantity: product.quantity,
@@ -40,8 +40,11 @@ class AdminRepositoryImpl implements IAdminRepository {
         price: product.price,
       );
 
+      // Create a new product model
+      final productModel = ProductMapper.toModel(productEntity);
+
       // Call the remote data source to save the product
-      await _remoteDataSource.sellProduct(product: productModel);
+      await _remoteDataSource.addProduct(product: productModel);
 
       // Show a success message
       if (context.mounted) {
@@ -52,6 +55,28 @@ class AdminRepositoryImpl implements IAdminRepository {
       if (context.mounted) {
         THelperFunctions.showToastBar(context, Text(e.toString()));
       }
+    }
+  }
+
+  @override
+  Future<List<ProductEntities>> getProducts() async {
+    try {
+      final productsModel = await _remoteDataSource.getProducts();
+
+      return productsModel
+          .map((productModel) => ProductMapper.toEntity(productModel))
+          .toList();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> deleteProduct({required String id}) async {
+    try {
+      return await _remoteDataSource.deleteProduct(id: id);
+    } catch (e) {
+      rethrow;
     }
   }
 }

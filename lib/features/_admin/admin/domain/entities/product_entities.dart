@@ -39,6 +39,15 @@ class ProductEntities extends Equatable {
     );
   }
 
+  factory ProductEntities.empty() => ProductEntities(
+        name: '',
+        description: '',
+        quantity: 0.0,
+        images: [],
+        category: '',
+        price: 0.0,
+      );
+
   @override
   String toString() {
     return 'ProductEntities(name: $name, description: $description, quantity: $quantity, images: $images, category: $category, price: $price, id: $id)';

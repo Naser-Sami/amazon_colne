@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 
 // IMPORT FROM OTHER FILES
 const authRoutes = require('./routes/auth');
+const adminRoutes = require('./routes/admin');
 
 
 // INITIALIZE
@@ -17,7 +18,7 @@ const db = ``;
 // MIDDLEWARE
 app.use(express.json())
 app.use(authRoutes);
-
+app.use(adminRoutes);
 
 // CONNECT TO MONGODB
 mongoose.connect(db).then(() => {

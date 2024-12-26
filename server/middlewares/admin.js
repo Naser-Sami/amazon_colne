@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
-const admin = async (req, res, next) => {
+const adminRoutes = async (req, res, next) => {
     try {
 
         const token = req.header("x-auth-token");
@@ -28,4 +28,4 @@ const admin = async (req, res, next) => {
     }
 }
 
-module.exports = admin;
+module.exports = adminRoutes;

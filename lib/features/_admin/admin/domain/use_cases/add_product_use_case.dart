@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 
 import '../domain.dart';
 
-class SellProductUseCase {
+class AddProductUseCase {
   final IAdminRepository repo;
-  SellProductUseCase({required this.repo});
+  AddProductUseCase(this.repo);
 
   Future<void> call({
     required BuildContext context,
     required ProductEntities product,
     required List<File> images,
   }) async {
-    await repo.sellProduct(
+    await repo.addProduct(
       context: context,
       product: product,
       images: images,

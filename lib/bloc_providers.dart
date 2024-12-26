@@ -14,4 +14,11 @@ final providers = [
       sl<GetUserDataUseCase>(),
     )..add(GetUserDataEvent()),
   ),
+  BlocProvider<AdminBloc>(
+    create: (context) => AdminBloc(
+      sl<AddProductUseCase>(),
+      sl<GetProductsUseCase>(),
+      sl<DeleteProductUseCase>(),
+    ),
+  ),
 ];

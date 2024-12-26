@@ -1,7 +1,10 @@
+import 'dart:developer';
 import 'dart:io';
 
+import 'package:amazon_clone/features/_features.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '/core/_core.dart';
 import '/config/_config.dart';
@@ -18,7 +21,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
   final TextEditingController quantityController = TextEditingController();
-  // final AdminServices adminServices = AdminServices();
 
   String category = 'Mobiles';
   List<File> images = [];
@@ -42,17 +44,25 @@ class _AddProductScreenState extends State<AddProductScreen> {
   ];
 
   void sellProduct() {
-    // if (_addProductFormKey.currentState!.validate() && images.isNotEmpty) {
-    //   adminServices.sellProduct(
-    //     context: context,
-    //     name: productNameController.text,
-    //     description: descriptionController.text,
-    //     price: double.parse(priceController.text),
-    //     quantity: double.parse(quantityController.text),
-    //     category: category,
-    //     images: images,
-    //   );
-    // }
+    if (_addProductFormKey.currentState!.validate() && images.isNotEmpty) {
+      ProductEntities product = ProductEntities.empty();
+
+      product = product.copyWith(
+        name: productNameController.text,
+        description: descriptionController.text,
+        quantity: double.parse(quantityController.text),
+        price: double.parse(priceController.text),
+        category: category,
+      );
+
+      context.read<AdminBloc>().add(
+            AddProductEvent(
+              context: context,
+              product: product,
+              images: images,
+            ),
+          );
+    }
   }
 
   void selectImages() async {
@@ -180,9 +190,19 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   ),
                 ),
                 const SizedBox(height: 10),
-                ElevatedButton(
-                  onPressed: sellProduct,
-                  child: const Text('Sell'),
+                BlocBuilder<AdminBloc, AdminState>(
+                  builder: (context, state) {
+                    if (state is AdminLoadingState) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+
+                    return ElevatedButton(
+                      onPressed: sellProduct,
+                      child: const Text('Sell'),
+                    );
+                  },
                 ),
               ],
             ),
