@@ -27,6 +27,9 @@ class AdminSingleProduct extends StatelessWidget {
             image,
             fit: BoxFit.fitHeight,
             width: 180,
+            loadingBuilder: (context, child, loadingProgress) => Center(
+              child: loadingProgress == null ? child : const CircularProgressIndicator(),
+            ),
             errorBuilder: (context, error, stackTrace) => Icon(
               Icons.error,
             ),

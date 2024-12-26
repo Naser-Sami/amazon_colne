@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -29,16 +28,13 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
   void _onAddProductEvent(AddProductEvent event, Emitter<AdminState> emit) async {
     emit(AdminLoadingState());
     try {
-      await _addProductUseCase.call(
+      final product = await _addProductUseCase.call(
         context: event.context,
         product: event.product,
         images: event.images,
       );
 
-      log('images: ${event.images}');
-      log('product: ${event.product}');
-
-      _products.add(event.product);
+      _products.add(product);
       emit(AdminSuccessState(_products));
     } catch (e) {
       emit(AdminFailureState(e.toString()));

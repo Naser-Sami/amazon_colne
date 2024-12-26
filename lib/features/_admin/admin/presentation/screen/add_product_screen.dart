@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:amazon_clone/features/_features.dart';
@@ -43,7 +42,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
     'Fashion'
   ];
 
-  void sellProduct() {
+  void addProduct() {
     if (_addProductFormKey.currentState!.validate() && images.isNotEmpty) {
       ProductEntities product = ProductEntities.empty();
 
@@ -106,11 +105,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           itemExtent: 200,
                           children: images.map(
                             (image) {
-                              return Builder(
-                                builder: (BuildContext context) => Image.file(
-                                  image,
-                                  fit: BoxFit.cover,
-                                ),
+                              return Image.file(
+                                image,
+                                fit: BoxFit.cover,
                               );
                             },
                           ).toList(),
@@ -199,7 +196,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     }
 
                     return ElevatedButton(
-                      onPressed: sellProduct,
+                      onPressed: addProduct,
                       child: const Text('Sell'),
                     );
                   },

@@ -11,7 +11,7 @@ class AdminRepositoryImpl implements IAdminRepository {
   AdminRepositoryImpl(this._remoteDataSource);
 
   @override
-  Future<void> addProduct(
+  Future<ProductEntities> addProduct(
       {required BuildContext context,
       required ProductEntities product,
       required List<File> images}) async {
@@ -43,18 +43,24 @@ class AdminRepositoryImpl implements IAdminRepository {
       // Create a new product model
       final productModel = ProductMapper.toModel(productEntity);
 
+      // log('Product Model: $productModel');
+      // log('Product Entity: $productEntity');
+
       // Call the remote data source to save the product
-      await _remoteDataSource.addProduct(product: productModel);
+      final result = await _remoteDataSource.addProduct(product: productModel);
 
       // Show a success message
       if (context.mounted) {
         THelperFunctions.showToastBar(context, Text('Product added successfully'));
         GoRouter.of(context).pop();
       }
+      return ProductMapper.toEntity(result);
     } catch (e) {
       if (context.mounted) {
         THelperFunctions.showToastBar(context, Text(e.toString()));
       }
+
+      rethrow;
     }
   }
 
