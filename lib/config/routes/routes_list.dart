@@ -70,4 +70,17 @@ List<RouteBase> routes = [
       );
     },
   ),
+  GoRoute(
+    name: 'Search',
+    path: '/search-screen',
+    pageBuilder: (context, state) {
+      final searchQuery = state.extra as String;
+
+      return CupertinoPage(
+        child: SearchScreen(
+          searchQuery: searchQuery,
+        ),
+      );
+    },
+  ),
 ];

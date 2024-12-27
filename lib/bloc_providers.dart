@@ -26,4 +26,9 @@ final providers = [
       sl<GetAllProductsUseCase>(),
     ),
   ),
+  BlocProvider<SearchBloc>(
+    create: (context) => SearchBloc(
+      sl<SearchProductsUseCase>(),
+    ),
+  ),
 ];

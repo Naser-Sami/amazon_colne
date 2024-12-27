@@ -25,4 +25,21 @@ router.get('/api/products', auth, async (req, res) => {
     }
 });
 
+// Create search 
+router.get('/api/products/search/:name', auth, async (req, res) => {
+    try {
+        const products = await Product.find({
+            name: { $regex: req.params.name, $options: 'i' }
+        });
+
+        if (!products) {
+            return res.status(404).json({ error: 'Products not found' });
+        }
+
+        res.json(products);
+    } catch (err) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
 module.exports = router;

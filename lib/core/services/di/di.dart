@@ -33,6 +33,12 @@ class DI {
       ),
     );
 
+    sl.registerFactory<SearchBloc>(
+      () => SearchBloc(
+        sl<SearchProductsUseCase>(),
+      ),
+    );
+
     // CUBIT's
     sl.registerLazySingleton<ThemeCubit>(
       () => ThemeCubit(),
@@ -55,6 +61,10 @@ class DI {
       () => ProductsRemoteDataSource(),
     );
 
+    sl.registerLazySingleton<SearchRemoteDataSource>(
+      () => SearchRemoteDataSource(),
+    );
+
     // REPOSITORIES
     sl.registerLazySingleton<AuthenticationRepository>(
       () => AuthRepositoryImplementation(
@@ -71,6 +81,12 @@ class DI {
     sl.registerLazySingleton<IProductsRepository>(
       () => ProductRepositoryImplementation(
         sl<ProductsRemoteDataSource>(),
+      ),
+    );
+
+    sl.registerLazySingleton<ISearchProductsRepository>(
+      () => SearchProductsRepositoryImplementation(
+        sl<SearchRemoteDataSource>(),
       ),
     );
 
@@ -116,9 +132,16 @@ class DI {
         sl<IAdminRepository>(),
       ),
     );
+
     sl.registerLazySingleton<GetAllProductsUseCase>(
       () => GetAllProductsUseCase(
         sl<IProductsRepository>(),
+      ),
+    );
+
+    sl.registerLazySingleton<SearchProductsUseCase>(
+      () => SearchProductsUseCase(
+        sl<ISearchProductsRepository>(),
       ),
     );
   }
