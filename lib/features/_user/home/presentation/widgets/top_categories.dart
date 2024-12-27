@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '/core/_core.dart';
 
 class TopCategories extends StatelessWidget {
   const TopCategories({super.key});
 
-  void navigateToCategoryPage(BuildContext context, String category) {}
+  void navigateToCategoryPage(BuildContext context, String category) {
+    GoRouter.of(context).push('/category_deals', extra: category);
+  }
 
   @override
   Widget build(BuildContext context) {

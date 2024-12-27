@@ -27,6 +27,12 @@ class DI {
       ),
     );
 
+    sl.registerFactory<ProductsBloc>(
+      () => ProductsBloc(
+        sl<GetAllProductsUseCase>(),
+      ),
+    );
+
     // CUBIT's
     sl.registerLazySingleton<ThemeCubit>(
       () => ThemeCubit(),
@@ -45,6 +51,10 @@ class DI {
       () => AdminRemoteDataSource(),
     );
 
+    sl.registerLazySingleton<ProductsRemoteDataSource>(
+      () => ProductsRemoteDataSource(),
+    );
+
     // REPOSITORIES
     sl.registerLazySingleton<AuthenticationRepository>(
       () => AuthRepositoryImplementation(
@@ -55,6 +65,12 @@ class DI {
     sl.registerLazySingleton<IAdminRepository>(
       () => AdminRepositoryImpl(
         sl<AdminRemoteDataSource>(),
+      ),
+    );
+
+    sl.registerLazySingleton<IProductsRepository>(
+      () => ProductRepositoryImplementation(
+        sl<ProductsRemoteDataSource>(),
       ),
     );
 
@@ -98,6 +114,11 @@ class DI {
     sl.registerLazySingleton<DeleteProductUseCase>(
       () => DeleteProductUseCase(
         sl<IAdminRepository>(),
+      ),
+    );
+    sl.registerLazySingleton<GetAllProductsUseCase>(
+      () => GetAllProductsUseCase(
+        sl<IProductsRepository>(),
       ),
     );
   }

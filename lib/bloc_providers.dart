@@ -21,4 +21,9 @@ final providers = [
       sl<DeleteProductUseCase>(),
     ),
   ),
+  BlocProvider<ProductsBloc>(
+    create: (context) => ProductsBloc(
+      sl<GetAllProductsUseCase>(),
+    ),
+  ),
 ];

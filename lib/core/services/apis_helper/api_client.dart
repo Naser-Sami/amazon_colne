@@ -65,11 +65,17 @@ class ApiClient {
     headers ??= _dio.options.headers;
     _dio.options.headers['x-auth-token'] = await getToken();
 
-    log('Request: $method $path');
-    log('Query Parameters: $queryParameters');
-    log('Headers: $headers');
-    log("Parser $parser");
-    log('Data $data');
+    log("""
+
+---------------------------------------------------------------
+Request: $method $path
+Query Parameters: $queryParameters
+Headers: $headers
+Parser $parser
+Data $data
+---------------------------------------------------------------
+
+""");
 
     try {
       final response = await _dio.request(
@@ -79,7 +85,7 @@ class ApiClient {
         data: data,
       );
 
-      // log('Response Data: ${response.data}');
+      log('Response Data: ${response.data}');
 
       if (parser != null) {
         return parser(response.data);

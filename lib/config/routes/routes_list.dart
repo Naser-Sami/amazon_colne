@@ -57,4 +57,17 @@ List<RouteBase> routes = [
     ),
     redirect: (context, state) => null,
   ),
+  GoRoute(
+    name: 'Category Deals',
+    path: '/category_deals',
+    pageBuilder: (context, state) {
+      final category = state.extra as String;
+
+      return CupertinoPage(
+        child: CategoryDealsScreen(
+          category: category,
+        ),
+      );
+    },
+  ),
 ];
