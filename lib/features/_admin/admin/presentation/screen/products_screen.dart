@@ -81,7 +81,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                             ),
                           ),
                           IconButton(
-                            onPressed: () => deleteProduct(product.id ?? ""),
+                            onPressed: () => deleteProduct(product.id),
                             icon: const Icon(
                               Icons.delete_outline,
                             ),
