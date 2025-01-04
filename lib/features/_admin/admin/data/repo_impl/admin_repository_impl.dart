@@ -32,13 +32,14 @@ class AdminRepositoryImpl implements IAdminRepository {
 
       // Create a new product model
       final productEntity = ProductEntities(
-        name: product.name,
-        description: product.description,
-        quantity: product.quantity,
-        images: imageUrls,
-        category: product.category,
-        price: product.price,
-      );
+          id: product.id,
+          name: product.name,
+          description: product.description,
+          quantity: product.quantity,
+          images: imageUrls,
+          category: product.category,
+          price: product.price,
+          rating: product.rating);
 
       // Create a new product model
       final productModel = ProductMapper.toModel(productEntity);

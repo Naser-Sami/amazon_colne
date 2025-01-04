@@ -83,4 +83,17 @@ List<RouteBase> routes = [
       );
     },
   ),
+  GoRoute(
+    name: 'Product Details',
+    path: ProductDetailScreen.routeName,
+    pageBuilder: (context, state) {
+      final product = state.extra as ProductEntities;
+
+      return CupertinoPage(
+        child: ProductDetailScreen(
+          product: product,
+        ),
+      );
+    },
+  ),
 ];

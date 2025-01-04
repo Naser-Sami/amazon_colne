@@ -31,4 +31,9 @@ final providers = [
       sl<SearchProductsUseCase>(),
     ),
   ),
+  BlocProvider<ProductDetailsBloc>(
+    create: (context) => ProductDetailsBloc(
+      sl<RateProductUseCase>(),
+    ),
+  ),
 ];

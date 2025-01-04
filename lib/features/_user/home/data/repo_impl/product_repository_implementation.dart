@@ -11,12 +11,15 @@ class ProductRepositoryImplementation implements IProductsRepository {
 
       List<ProductEntities> entities = models.map((model) {
         return ProductEntities(
-            name: model.name,
-            description: model.description,
-            quantity: model.quantity,
-            images: model.images,
-            category: model.category,
-            price: model.price);
+          id: model.id,
+          name: model.name,
+          description: model.description,
+          quantity: model.quantity,
+          images: model.images,
+          category: model.category,
+          price: model.price,
+          rating: model.rating.map((e) => RatingMapper.toEntity(e)).toList(),
+        );
       }).toList();
 
       return entities;

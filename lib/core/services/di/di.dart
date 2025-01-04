@@ -39,6 +39,12 @@ class DI {
       ),
     );
 
+    sl.registerFactory<ProductDetailsBloc>(
+      () => ProductDetailsBloc(
+        sl<RateProductUseCase>(),
+      ),
+    );
+
     // CUBIT's
     sl.registerLazySingleton<ThemeCubit>(
       () => ThemeCubit(),
@@ -65,6 +71,10 @@ class DI {
       () => SearchRemoteDataSource(),
     );
 
+    sl.registerLazySingleton<ProductDetailsRemoteDataSource>(
+      () => ProductDetailsRemoteDataSource(),
+    );
+
     // REPOSITORIES
     sl.registerLazySingleton<AuthenticationRepository>(
       () => AuthRepositoryImplementation(
@@ -87,6 +97,12 @@ class DI {
     sl.registerLazySingleton<ISearchProductsRepository>(
       () => SearchProductsRepositoryImplementation(
         sl<SearchRemoteDataSource>(),
+      ),
+    );
+
+    sl.registerLazySingleton<IProductDetailsRepository>(
+      () => ProductDetailsRepositoryImpl(
+        sl<ProductDetailsRemoteDataSource>(),
       ),
     );
 
@@ -142,6 +158,18 @@ class DI {
     sl.registerLazySingleton<SearchProductsUseCase>(
       () => SearchProductsUseCase(
         sl<ISearchProductsRepository>(),
+      ),
+    );
+
+    sl.registerLazySingleton<RateProductUseCase>(
+      () => RateProductUseCase(
+        sl<IProductDetailsRepository>(),
+      ),
+    );
+
+    sl.registerLazySingleton<AddToCartUseCase>(
+      () => AddToCartUseCase(
+        sl<IProductDetailsRepository>(),
       ),
     );
   }

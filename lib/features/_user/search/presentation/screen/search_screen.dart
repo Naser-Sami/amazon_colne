@@ -133,7 +133,10 @@ class _SearchScreenState extends State<SearchScreen> {
                       final product = state.products[index];
 
                       return GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          GoRouter.of(context)
+                              .push(ProductDetailScreen.routeName, extra: product);
+                        },
                         child: SearchedProduct(
                           product: product,
                         ),

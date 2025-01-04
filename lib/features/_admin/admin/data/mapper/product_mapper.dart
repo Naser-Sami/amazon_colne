@@ -10,6 +10,7 @@ class ProductMapper {
       category: model.category,
       price: model.price,
       id: model.id,
+      rating: model.rating.map((e) => RatingMapper.toEntity(e)).toList(),
     );
   }
 
@@ -22,6 +23,7 @@ class ProductMapper {
       category: entity.category,
       price: entity.price,
       id: entity.id,
+      rating: entity.rating.map((e) => RatingMapper.toModel(e)).toList(),
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:amazon_clone/features/_features.dart';
 import 'package:equatable/equatable.dart';
 
 class ProductEntities extends Equatable {
@@ -7,7 +8,8 @@ class ProductEntities extends Equatable {
   final List<String> images;
   final String category;
   final double price;
-  final String? id;
+  final String id;
+  final List<RatingEntities> rating;
 
   const ProductEntities({
     required this.name,
@@ -16,7 +18,8 @@ class ProductEntities extends Equatable {
     required this.images,
     required this.category,
     required this.price,
-    this.id,
+    required this.id,
+    required this.rating,
   });
 
   ProductEntities copyWith({
@@ -27,6 +30,7 @@ class ProductEntities extends Equatable {
     String? category,
     double? price,
     String? id,
+    List<RatingEntities>? rating,
   }) {
     return ProductEntities(
       name: name ?? this.name,
@@ -36,31 +40,27 @@ class ProductEntities extends Equatable {
       category: category ?? this.category,
       price: price ?? this.price,
       id: id ?? this.id,
+      rating: rating ?? this.rating,
     );
   }
 
   factory ProductEntities.empty() => ProductEntities(
+        id: '',
         name: '',
         description: '',
         quantity: 0.0,
         images: [],
         category: '',
         price: 0.0,
+        rating: [],
       );
 
   @override
   String toString() {
-    return 'ProductEntities(name: $name, description: $description, quantity: $quantity, images: $images, category: $category, price: $price, id: $id)';
+    return 'ProductEntities(name: $name, description: $description, quantity: $quantity, images: $images, category: $category, price: $price, id: $id, rating: $rating)';
   }
 
   @override
-  List<Object?> get props => [
-        name,
-        description,
-        quantity,
-        images,
-        category,
-        price,
-        id,
-      ];
+  List<Object?> get props =>
+      [name, description, quantity, images, category, price, id, rating];
 }

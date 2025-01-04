@@ -1,5 +1,4 @@
-import 'package:amazon_clone/core/_core.dart';
-
+import '/core/_core.dart';
 import '/features/_features.dart';
 
 class SearchRemoteDataSource {

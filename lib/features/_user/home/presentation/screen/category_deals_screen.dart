@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '/config/_config.dart';
 import '/features/_features.dart';
@@ -92,7 +95,10 @@ class _CategoryDealsScreenState extends State<CategoryDealsScreen> {
                       }
 
                       return GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          GoRouter.of(context)
+                              .push(ProductDetailScreen.routeName, extra: product);
+                        },
                         child: Column(
                           children: [
                             SizedBox(
