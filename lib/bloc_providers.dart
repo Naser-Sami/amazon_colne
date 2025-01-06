@@ -24,6 +24,7 @@ final providers = [
   BlocProvider<ProductsBloc>(
     create: (context) => ProductsBloc(
       sl<GetAllProductsUseCase>(),
+      sl<GetDealOfDayUseCase>(),
     ),
   ),
   BlocProvider<SearchBloc>(

@@ -13,3 +13,5 @@ class GetAllProductsEvent extends ProductsEvent {
   @override
   List<Object> get props => [category];
 }
+
+class GetDealOfDayEvent extends ProductsEvent {}

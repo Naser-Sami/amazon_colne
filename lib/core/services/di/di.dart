@@ -30,6 +30,7 @@ class DI {
     sl.registerFactory<ProductsBloc>(
       () => ProductsBloc(
         sl<GetAllProductsUseCase>(),
+        sl<GetDealOfDayUseCase>(),
       ),
     );
 
@@ -170,6 +171,12 @@ class DI {
     sl.registerLazySingleton<AddToCartUseCase>(
       () => AddToCartUseCase(
         sl<IProductDetailsRepository>(),
+      ),
+    );
+
+    sl.registerLazySingleton<GetDealOfDayUseCase>(
+      () => GetDealOfDayUseCase(
+        sl<IProductsRepository>(),
       ),
     );
   }

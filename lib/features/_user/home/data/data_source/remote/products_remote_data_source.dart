@@ -14,4 +14,13 @@ class ProductsRemoteDataSource {
 
     return products ?? [];
   }
+
+  // Get deal of day
+  Future<ProductModel> getDealOfDay() async {
+    final dealOfDay = await ApiClient.get<ProductModel>(
+      path: '/api/deal-of-day',
+      parser: (data) => ProductModel.fromMap(data),
+    );
+    return dealOfDay ?? ProductModel.empty();
+  }
 }

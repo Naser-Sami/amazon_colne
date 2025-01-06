@@ -7,13 +7,14 @@ const mongoose = require('mongoose');
 const authRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/admin');
 const productRoutes = require('./routes/product');
+const userRouter = require("./routes/user");
 
 
 // INITIALIZE
 const PORT = 3000;
 const app = express();
 const password = "";
-const db = ``;
+const db = `]`;
 
 
 // MIDDLEWARE
@@ -21,6 +22,8 @@ app.use(express.json())
 app.use(authRoutes);
 app.use(adminRoutes);
 app.use(productRoutes)
+app.use(userRouter);
+
 
 // CONNECT TO MONGODB
 mongoose.connect(db).then(() => {

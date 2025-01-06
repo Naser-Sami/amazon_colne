@@ -27,4 +27,14 @@ class ProductRepositoryImplementation implements IProductsRepository {
       rethrow;
     }
   }
+
+  @override
+  Future<ProductEntities> getDealOfDay() async {
+    try {
+      final model = await _dataSource.getDealOfDay();
+      return ProductMapper.toEntity(model);
+    } catch (e) {
+      rethrow;
+    }
+  }
 }
