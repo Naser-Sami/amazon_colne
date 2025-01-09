@@ -5,36 +5,20 @@ import 'config/_config.dart';
 import 'features/_features.dart';
 
 final providers = [
-  BlocProvider<ThemeCubit>(create: (context) => ThemeCubit()),
+  BlocProvider<ThemeCubit>(create: (context) => sl<ThemeCubit>()),
   BlocProvider<AuthBloc>(
-    create: (context) => AuthBloc(
-      sl<SignUpUseCase>(),
-      sl<LoginUseCase>(),
-      sl<TokenIsValidUseCase>(),
-      sl<GetUserDataUseCase>(),
-    )..add(GetUserDataEvent()),
+    create: (context) => sl<AuthBloc>()..add(GetUserDataEvent()),
   ),
   BlocProvider<AdminBloc>(
-    create: (context) => AdminBloc(
-      sl<AddProductUseCase>(),
-      sl<GetProductsUseCase>(),
-      sl<DeleteProductUseCase>(),
-    ),
+    create: (context) => sl<AdminBloc>(),
   ),
   BlocProvider<ProductsBloc>(
-    create: (context) => ProductsBloc(
-      sl<GetAllProductsUseCase>(),
-      sl<GetDealOfDayUseCase>(),
-    ),
+    create: (context) => sl<ProductsBloc>(),
   ),
   BlocProvider<SearchBloc>(
-    create: (context) => SearchBloc(
-      sl<SearchProductsUseCase>(),
-    ),
+    create: (context) => sl<SearchBloc>(),
   ),
   BlocProvider<ProductDetailsBloc>(
-    create: (context) => ProductDetailsBloc(
-      sl<RateProductUseCase>(),
-    ),
+    create: (context) => sl<ProductDetailsBloc>(),
   ),
 ];

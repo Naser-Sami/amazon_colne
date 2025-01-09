@@ -1,4 +1,8 @@
+import 'dart:developer';
+
+import 'package:amazon_clone/core/_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '/features/_features.dart';
 
@@ -6,7 +10,8 @@ class BottomNavigationBarComponent extends StatefulWidget {
   const BottomNavigationBarComponent({super.key});
 
   @override
-  State<BottomNavigationBarComponent> createState() => _BottomNavigationBarComponentState();
+  State<BottomNavigationBarComponent> createState() =>
+      _BottomNavigationBarComponentState();
 }
 
 class _BottomNavigationBarComponentState extends State<BottomNavigationBarComponent> {
@@ -26,6 +31,7 @@ class _BottomNavigationBarComponentState extends State<BottomNavigationBarCompon
 
   @override
   Widget build(BuildContext context) {
+    log("USER:: ${sl<AuthBloc>().user}");
     return Scaffold(
       body: pages[_page],
       bottomNavigationBar: BottomNavigationBar(
@@ -54,7 +60,7 @@ class _BottomNavigationBarComponentState extends State<BottomNavigationBarCompon
                 Icons.home_outlined,
               ),
             ),
-            label: '',
+            label: 'Home',
           ),
 
           // ACCOUNT
@@ -76,7 +82,7 @@ class _BottomNavigationBarComponentState extends State<BottomNavigationBarCompon
                 Icons.person_outline_outlined,
               ),
             ),
-            label: '',
+            label: 'Account',
           ),
 
           // CART
@@ -95,14 +101,14 @@ class _BottomNavigationBarComponentState extends State<BottomNavigationBarCompon
                 ),
               ),
               child: Badge.count(
-                count: 9,
+                count: context.watch<AuthBloc>().user?.cart.length ?? 0,
                 textColor: Colors.white,
                 child: const Icon(
                   Icons.shopping_cart_outlined,
                 ),
               ),
             ),
-            label: '',
+            label: 'Cart',
           ),
         ],
       ),

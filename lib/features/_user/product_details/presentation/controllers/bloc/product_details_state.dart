@@ -24,3 +24,19 @@ final class ProductDetailsError extends ProductDetailsState {
   @override
   List<Object> get props => [error];
 }
+
+final class AddToCartLoadingState extends ProductDetailsState {}
+
+final class AddToCartLoadedState extends ProductDetailsState {
+  final UserEntity user;
+  const AddToCartLoadedState({required this.user});
+  @override
+  List<Object> get props => [user];
+}
+
+final class AddTodCartErrorState extends ProductDetailsState {
+  final String error;
+  const AddTodCartErrorState({required this.error});
+  @override
+  List<Object> get props => [error];
+}

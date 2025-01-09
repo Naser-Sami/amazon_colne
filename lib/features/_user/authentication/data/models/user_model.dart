@@ -9,6 +9,7 @@ class UserModel extends Equatable {
   final String id;
   final String token;
   final int version;
+  final List<dynamic> cart;
 
   // constructor
   const UserModel({
@@ -20,6 +21,7 @@ class UserModel extends Equatable {
     required this.id,
     required this.token,
     required this.version,
+    required this.cart,
   });
 
   // from json method
@@ -33,6 +35,11 @@ class UserModel extends Equatable {
       id: json['_id'],
       token: json['token'],
       version: json['__v'],
+      cart: List<Map<String, dynamic>>.from(
+        json['cart']?.map(
+          (x) => Map<String, dynamic>.from(x),
+        ),
+      ),
     );
   }
 
@@ -47,6 +54,7 @@ class UserModel extends Equatable {
       '_id': id,
       'token': token,
       '__v': version,
+      'cart': cart,
     };
   }
 
@@ -61,6 +69,7 @@ class UserModel extends Equatable {
       id: '',
       token: '',
       version: 0,
+      cart: [],
     );
   }
 
@@ -74,6 +83,7 @@ class UserModel extends Equatable {
     String? id,
     String? token,
     int? version,
+    List<dynamic>? cart,
   }) {
     return UserModel(
       name: name ?? this.name,
@@ -84,6 +94,7 @@ class UserModel extends Equatable {
       id: id ?? this.id,
       token: token ?? this.token,
       version: version ?? this.version,
+      cart: cart ?? this.cart,
     );
   }
 
@@ -92,7 +103,8 @@ class UserModel extends Equatable {
   String toString() {
     return """
 
-      UserModel(id: $id, email: $email, username: $name)
+      UserModel(id: $id, email: $email, username: $name, cart: $cart)
+
       ----------------------------------------------------------
       TOKEN: $token
 
@@ -100,5 +112,6 @@ class UserModel extends Equatable {
   }
 
   @override
-  List<Object?> get props => [name, email, password, address, type, id, token, version];
+  List<Object?> get props =>
+      [name, email, password, address, type, id, token, version, cart];
 }

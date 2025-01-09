@@ -14,7 +14,7 @@ const userRouter = require("./routes/user");
 const PORT = 3000;
 const app = express();
 const password = "";
-const db = `]`;
+const db = ``;
 
 
 // MIDDLEWARE
@@ -26,7 +26,7 @@ app.use(userRouter);
 
 
 // CONNECT TO MONGODB
-mongoose.connect(db).then(() => {
+mongoose.connect(db).then(() => { 
     console.log("Connected to MongoDB successfully");
 }).catch((err) => {
     console.log("Error connecting to MongoDB", err);

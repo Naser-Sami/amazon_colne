@@ -13,6 +13,7 @@ class UserMapper {
       id: userModel.id,
       token: userModel.token,
       version: userModel.version,
+      cart: userModel.cart,
     );
   }
 
@@ -26,6 +27,7 @@ class UserMapper {
       id: userEntity.id,
       token: userEntity.token,
       version: userEntity.version,
+      cart: userEntity.cart,
     );
   }
 }

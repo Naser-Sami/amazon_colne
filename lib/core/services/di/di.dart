@@ -43,6 +43,7 @@ class DI {
     sl.registerFactory<ProductDetailsBloc>(
       () => ProductDetailsBloc(
         sl<RateProductUseCase>(),
+        sl<AddToCartUseCase>(),
       ),
     );
 

@@ -23,7 +23,8 @@ class AuthRemoteDataSource {
         type: "",
         id: "",
         token: "",
-        version: 0);
+        version: 0,
+        cart: []);
 
     // send request to server
     final user = await ApiClient.post<UserModel>(

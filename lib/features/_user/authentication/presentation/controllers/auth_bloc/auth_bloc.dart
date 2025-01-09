@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -88,6 +90,8 @@ class AuthBloc extends Bloc<AuthEvents, AuthState> {
       } else {
         await ApiClient.setToken('');
       }
+
+      log("GetUserDataEvent: $user");
     } catch (e) {
       emit(AuthFailureState(e.toString()));
     }

@@ -1,3 +1,4 @@
+import 'package:amazon_clone/core/services/di/di.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -45,7 +46,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     GoRouter.of(context).push(ProductDetailScreen.routeName, extra: query);
   }
 
-  void addToCart() {}
+  void addToCart() {
+    context.read<ProductDetailsBloc>().add(
+          AddToCartEvent(
+            user: context.read<AuthBloc>().user!,
+          ),
+        );
+  }
 
   void onRatingUpdate(double rating) {
     context.read<ProductDetailsBloc>().add(

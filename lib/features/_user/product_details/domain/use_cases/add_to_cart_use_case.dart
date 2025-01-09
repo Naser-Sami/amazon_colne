@@ -1,15 +1,14 @@
-import '/features/_admin/_admin.dart';
-import '../repo/_repo.dart';
+import '/features/_features.dart';
 
 class AddToCartUseCase {
   final IProductDetailsRepository _repository;
   AddToCartUseCase(this._repository);
 
   Future<void> call({
-    required ProductEntities product,
+    required UserEntity user,
   }) async {
     await _repository.addToCart(
-      product: product,
+      user: user,
     );
   }
 }

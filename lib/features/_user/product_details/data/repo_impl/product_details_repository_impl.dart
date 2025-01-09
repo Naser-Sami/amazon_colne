@@ -5,9 +5,14 @@ class ProductDetailsRepositoryImpl implements IProductDetailsRepository {
   ProductDetailsRepositoryImpl(this._dataSource);
 
   @override
-  Future<void> addToCart({required ProductEntities product}) async {
-    // TODO: implement addToCart
-    throw UnimplementedError();
+  Future<void> addToCart({required UserEntity user}) async {
+    try {
+      // convert to model
+      final model = UserMapper.toModel(user);
+      await _dataSource.addToCart(user: model);
+    } catch (e) {
+      rethrow;
+    }
   }
 
   @override

@@ -1,4 +1,4 @@
-import '/features/_admin/_admin.dart';
+import '/features/_features.dart';
 
 abstract class IProductDetailsRepository {
   Future<void> rateProduct({
@@ -6,5 +6,5 @@ abstract class IProductDetailsRepository {
     required double rating,
   });
 
-  Future<void> addToCart({required ProductEntities product});
+  Future<void> addToCart({required UserEntity user});
 }
