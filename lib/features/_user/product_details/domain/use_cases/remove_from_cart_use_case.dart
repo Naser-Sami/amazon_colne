@@ -1,13 +1,13 @@
 import '/features/_features.dart';
 
-class AddToCartUseCase {
+class RemoveFromCartUseCase {
   final IProductDetailsRepository _repository;
-  AddToCartUseCase(this._repository);
+  RemoveFromCartUseCase(this._repository);
 
   Future<void> call({
     required ProductEntities product,
   }) async {
-    await _repository.addToCart(
+    await _repository.removeFromCart(
       product: product,
     );
   }

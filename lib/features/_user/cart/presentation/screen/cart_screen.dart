@@ -1,42 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '/config/_config.dart';
 import '/features/_features.dart';
 
-class SearchScreen extends StatefulWidget {
-  static String routeName = '/search-screen';
-  final String searchQuery;
-
-  const SearchScreen({
-    super.key,
-    required this.searchQuery,
-  });
+class CartScreen extends StatefulWidget {
+  static const String routeName = '/cart';
+  const CartScreen({super.key});
 
   @override
-  State<SearchScreen> createState() => _SearchScreenState();
+  State<CartScreen> createState() => _CartScreenState();
 }
 
-class _SearchScreenState extends State<SearchScreen> {
-  @override
-  void initState() {
-    super.initState();
-    fetchSearchedProduct();
-  }
-
-  Future<void> fetchSearchedProduct() async {
-    context.read<SearchBloc>().add(
-          SearchProductEvent(widget.searchQuery),
-        );
-  }
-
+class _CartScreenState extends State<CartScreen> {
   void navigateToSearchScreen(String query) {
-    GoRouter.of(context).push(SearchScreen.routeName, extra: query);
+    Navigator.pushNamed(context, SearchScreen.routeName, arguments: query);
+  }
+
+  void navigateToAddress(int sum) {
+    // Navigator.pushNamed(
+    //   context,
+    //   AddressScreen.routeName,
+    //   arguments: sum.toString(),
+    // );
   }
 
   @override
   Widget build(BuildContext context) {
+    final user = context.watch<AuthBloc>().user;
+    int sum = 0;
+    user?.cart.map((e) => sum += e['quantity'] * e['product']['price'] as int).toList();
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
@@ -110,49 +104,40 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
         ),
       ),
-      body: Column(
-        children: [
-          const AddressBox(),
-          const SizedBox(height: 10),
-          Expanded(
-            child: BlocBuilder<SearchBloc, SearchState>(
-              builder: (context, state) {
-                if (state is SearchLoading) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                if (state is SearchError) {
-                  return Center(
-                    child: Text(state.error),
-                  );
-                }
-                if (state is SearchLoaded) {
-                  return ListView.builder(
-                    itemCount: state.products.length,
-                    itemBuilder: (context, index) {
-                      final product = state.products[index];
-
-                      return GestureDetector(
-                        onTap: () {
-                          GoRouter.of(context)
-                              .push(ProductDetailScreen.routeName, extra: product);
-                        },
-                        child: SearchedProduct(
-                          product: product,
-                        ),
-                      );
-                    },
-                  );
-                }
-
-                return const Center(
-                  child: Text('Something went wrong!'),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const AddressBox(),
+            const CartSubtotal(),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                onPressed: () => navigateToAddress(sum),
+                style: ButtonStyle(
+                  backgroundColor: WidgetStateProperty.all(
+                    Colors.yellow[600],
+                  ),
+                ),
+                child: Text('Proceed to Buy (${user?.cart.length} items)'),
+              ),
+            ),
+            const SizedBox(height: 15),
+            Container(
+              color: Colors.black12.withValues(alpha: 0.08),
+              height: 1,
+            ),
+            const SizedBox(height: 5),
+            ListView.builder(
+              itemCount: user?.cart.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return CartProduct(
+                  index: index,
                 );
               },
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

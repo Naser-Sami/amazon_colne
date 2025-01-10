@@ -9,11 +9,16 @@ part 'product_details_state.dart';
 class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> {
   final RateProductUseCase _rateProductUseCase;
   final AddToCartUseCase _addToCartUseCase;
+  final RemoveFromCartUseCase _removeFromCartUseCase;
 
-  ProductDetailsBloc(this._rateProductUseCase, this._addToCartUseCase)
-      : super(ProductDetailsInitial()) {
+  ProductDetailsBloc(
+    this._rateProductUseCase,
+    this._addToCartUseCase,
+    this._removeFromCartUseCase,
+  ) : super(ProductDetailsInitial()) {
     on<RateProductEvent>(_onRateProduct);
     on<AddToCartEvent>(_onAddToCart);
+    on<RemoveFromCartEvent>(_onRemoveFromCart);
   }
 
   Future<void> _onRateProduct(
@@ -37,13 +42,28 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
     Emitter<ProductDetailsState> emit,
   ) async {
     try {
-      emit(AddToCartLoadingState());
+      emit(ProductDetailsLoading());
       await _addToCartUseCase.call(
-        user: event.user,
+        product: event.product,
       );
-      emit(AddToCartLoadedState(user: event.user));
+      emit(ProductDetailsLoaded(product: event.product));
     } catch (e) {
-      emit(AddTodCartErrorState(error: e.toString()));
+      emit(ProductDetailsError(error: e.toString()));
+    }
+  }
+
+  Future<void> _onRemoveFromCart(
+    RemoveFromCartEvent event,
+    Emitter<ProductDetailsState> emit,
+  ) async {
+    try {
+      emit(ProductDetailsLoading());
+      await _removeFromCartUseCase.call(
+        product: event.product,
+      );
+      emit(ProductDetailsLoaded(product: event.product));
+    } catch (e) {
+      emit(ProductDetailsError(error: e.toString()));
     }
   }
 }

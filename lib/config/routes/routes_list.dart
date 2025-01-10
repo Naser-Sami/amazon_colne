@@ -72,7 +72,7 @@ List<RouteBase> routes = [
   ),
   GoRoute(
     name: 'Search',
-    path: '/search-screen',
+    path: SearchScreen.routeName,
     pageBuilder: (context, state) {
       final searchQuery = state.extra as String;
 
@@ -93,6 +93,15 @@ List<RouteBase> routes = [
         child: ProductDetailScreen(
           product: product,
         ),
+      );
+    },
+  ),
+  GoRoute(
+    name: 'Cart',
+    path: CartScreen.routeName,
+    pageBuilder: (context, state) {
+      return CupertinoPage(
+        child: CartScreen(),
       );
     },
   ),

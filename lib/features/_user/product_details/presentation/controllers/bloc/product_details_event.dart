@@ -20,8 +20,15 @@ class RateProductEvent extends ProductDetailsEvent {
 }
 
 class AddToCartEvent extends ProductDetailsEvent {
-  final UserEntity user;
-  const AddToCartEvent({required this.user});
+  final ProductEntities product;
+  const AddToCartEvent({required this.product});
   @override
-  List<Object> get props => [user];
+  List<Object> get props => [product];
+}
+
+class RemoveFromCartEvent extends ProductDetailsEvent {
+  final ProductEntities product;
+  const RemoveFromCartEvent({required this.product});
+  @override
+  List<Object> get props => [product];
 }

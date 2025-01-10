@@ -6,5 +6,7 @@ abstract class IProductDetailsRepository {
     required double rating,
   });
 
-  Future<void> addToCart({required UserEntity user});
+  Future<void> addToCart({required ProductEntities product});
+
+  Future<void> removeFromCart({required ProductEntities product});
 }

@@ -5,11 +5,11 @@ class ProductDetailsRepositoryImpl implements IProductDetailsRepository {
   ProductDetailsRepositoryImpl(this._dataSource);
 
   @override
-  Future<void> addToCart({required UserEntity user}) async {
+  Future<void> addToCart({required ProductEntities product}) async {
     try {
       // convert to model
-      final model = UserMapper.toModel(user);
-      await _dataSource.addToCart(user: model);
+      final model = ProductMapper.toModel(product);
+      await _dataSource.addToCart(product: model);
     } catch (e) {
       rethrow;
     }
@@ -28,6 +28,17 @@ class ProductDetailsRepositoryImpl implements IProductDetailsRepository {
         product: model,
         rating: rating,
       );
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> removeFromCart({required ProductEntities product}) async {
+    try {
+      // convert to model
+      final model = ProductMapper.toModel(product);
+      await _dataSource.removeFromCart(product: model);
     } catch (e) {
       rethrow;
     }

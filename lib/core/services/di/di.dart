@@ -44,6 +44,7 @@ class DI {
       () => ProductDetailsBloc(
         sl<RateProductUseCase>(),
         sl<AddToCartUseCase>(),
+        sl<RemoveFromCartUseCase>(),
       ),
     );
 
@@ -171,6 +172,12 @@ class DI {
 
     sl.registerLazySingleton<AddToCartUseCase>(
       () => AddToCartUseCase(
+        sl<IProductDetailsRepository>(),
+      ),
+    );
+
+    sl.registerLazySingleton<RemoveFromCartUseCase>(
+      () => RemoveFromCartUseCase(
         sl<IProductDetailsRepository>(),
       ),
     );

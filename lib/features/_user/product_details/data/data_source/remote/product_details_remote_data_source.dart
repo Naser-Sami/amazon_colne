@@ -17,13 +17,18 @@ class ProductDetailsRemoteDataSource {
     );
   }
 
-  Future<void> addToCart({required UserModel user}) async {
-    log("__________ USER MODEL __________ $user");
+  Future<void> addToCart({required ProductModel product}) async {
     await ApiClient.post(
       path: '/api/add-to-cart',
       data: {
-        'id': user.id,
+        'id': product.id,
       },
+    );
+  }
+
+  Future<void> removeFromCart({required ProductModel product}) async {
+    await ApiClient.delete(
+      path: '/api/remove-from-cart/${product.id}',
     );
   }
 }

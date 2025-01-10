@@ -20,7 +20,7 @@ class _BottomNavigationBarComponentState extends State<BottomNavigationBarCompon
   List<Widget> pages = [
     const HomeScreen(),
     const AccountScreen(),
-    const Scaffold(body: Center(child: Text("Cart"))),
+    const CartScreen(),
   ];
 
   void updatePage(int page) {

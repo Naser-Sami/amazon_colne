@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '/config/_config.dart';
+import '/features/_features.dart';
 
 PreferredSizeWidget? homeAppBar(BuildContext context) {
   void navigateToSearchScreen(String query) {
-    GoRouter.of(context).push('/search-screen', extra: query);
+    GoRouter.of(context).push(SearchScreen.routeName, extra: query);
   }
 
   return PreferredSize(
